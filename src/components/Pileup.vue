@@ -1,8 +1,10 @@
 <template>
   <div class='pileup'>
-    <button @click='zoomOut'>-</button>
-    <button @click='zoomIn'>+</button>
     <div id='igv-content'></div>
+    <div id='igv-zoom-buttons'>
+      <button @click='zoomOut'>-</button>
+      <button @click='zoomIn'>+</button>
+    </div>
   </div>
 </template>
 
@@ -12,6 +14,11 @@ import igv from 'igv'
 
 export default {
   name: 'pileup',
+  props: {
+    referenceURL: String,
+    alignmentURL: String,
+    locus: String,
+  },
   data () {
     return {
       browser: null,
@@ -29,21 +36,21 @@ export default {
       //showCursorTrackingGuide: true,
       showCenterGuide: true,
       //showSequence: false,
+      minimumBases: 20,
       reference: {
-       id: "hg38",
-       name: "Human (GRCh38/hg38)",
-       fastaURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg38/hg38.fa",
-       indexURL: "https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg38/hg38.fa.fai",
+       //id: "hg38",
+       //name: "Human (GRCh38/hg38)",
+       fastaURL: this.referenceURL,
       },
-      //locus: 'chr8:128,747,267-128,748,546',
-      locus: 'chr8:128748750-128749000',
-      flanking: 1000,
+      //locus: 'chr8:128748750-128749000',
+      locus: this.locus,
+      //flanking: 1000,
       tracks: [
         {
           type: 'alignment',
           format: 'bam',
-          url: 'https://s3.amazonaws.com/1000genomes/phase3/data/HG00096/exome_alignment/HG00096.mapped.ILLUMINA.bwa.GBR.exome.20120522.bam',
-          name: 'HG02450'
+          url: this.alignmentURL,
+          //name: 'HG02450'
         }
       ]
     }
@@ -64,9 +71,18 @@ export default {
 </script>
 
 <style scoped>
+.pileup {
+  max-width: 640px;
+}
+
 #igv-content {
-  max-width: 800px;
-  max-height: 400px;
+  max-height: 480px;
   pointer-events: none;
+}
+
+#igv-zoom-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
