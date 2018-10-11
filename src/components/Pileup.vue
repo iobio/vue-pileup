@@ -77,7 +77,7 @@ export default {
 
 #igv-content {
   max-height: 480px;
-  pointer-events: none;
+  /*pointer-events: none;*/
 }
 
 #igv-zoom-buttons {
