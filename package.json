@@ -1,14 +1,12 @@
 {
   "name": "vue-pileup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/anderspitman/vue-pileup",
-  "main": "dist/VuePileup.common.js",
-  "unpkg": "dist/VuePileup.umd.min.js",
+  "main": "src/components/Pileup.vue",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "build:npm": "vue-cli-service build --target lib --name VuePileup"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "igv": "^2.0.0-rc5",
@@ -43,9 +41,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "files": [
-    "dist/VuePileup.umd.min.js",
-    "dist/VuePileup.common.js"
   ]
 }
