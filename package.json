@@ -1,21 +1,22 @@
 {
   "name": "vue-pileup",
   "version": "0.1.1",
-  "homepage": "https://github.com/anderspitman/vue-pileup",
-  "main": "src/components/Pileup.vue",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "igv": "^2.0.0-rc5",
-    "vue": "^2.5.17"
+    "@babel/polyfill": "^7.0.0-rc.1",
+    "vue": "^2.5.17",
+    "vuetify": "^1.2.0"
   },
   "devDependencies": {
+    "@mdi/font": "^2.8.94",
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
+    "vue-cli-plugin-vuetify": "^0.2.1",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -40,6 +41,8 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
-  ]
+    "not ie <= 10"
+  ],
+  "homepage": "https://github.com/anderspitman/vue-pileup",
+  "main": "src/components/Pileup.vue"
 }

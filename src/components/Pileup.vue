@@ -1,10 +1,20 @@
 <template>
   <div class='pileup'>
-    <div id='igv-content'></div>
-    <div id='igv-zoom-buttons'>
-      <button @click='zoomOut'>-</button>
-      <button @click='zoomIn'>+</button>
-    </div>
+    <v-app>
+      <v-container>
+        <v-card>
+        <div id='igv-content'></div>
+        <v-layout justify-center>
+          <v-btn fab small @click='zoomOut'>
+            <v-icon>zoom_out</v-icon>
+          </v-btn>
+          <v-btn fab small @click='zoomIn'>
+            <v-icon>zoom_in</v-icon>
+          </v-btn>
+        </v-layout>
+        </v-card>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -12,12 +22,30 @@
 
 import igv from 'igv'
 
+const PileupButton = {
+  render(h) {
+    return h('button', {
+        on: {
+          click: () => {
+            this.$emit('click');
+          }
+        },
+      },
+      this.$slots.default
+    );
+  },
+};
+
 export default {
   name: 'pileup',
   props: {
     referenceURL: String,
     alignmentURL: String,
     locus: String,
+    visible: Boolean,
+  },
+  components: {
+    PileupButton,
   },
   data () {
     return {
@@ -26,25 +54,17 @@ export default {
   },
   mounted: function () {
     const igvDiv = this.$el.querySelector('#igv-content');
-
+ 
     var options = {
-      //showNavigation: false,
-      //showRuler: false,
       showControls: false,
       showIdeogram: false,
       showTrackLabels: false,
-      //showCursorTrackingGuide: true,
       showCenterGuide: true,
-      //showSequence: false,
       minimumBases: 20,
       reference: {
-       //id: "hg38",
-       //name: "Human (GRCh38/hg38)",
        fastaURL: this.referenceURL,
       },
-      //locus: 'chr8:128748750-128749000',
       locus: this.locus,
-      //flanking: 1000,
       tracks: [
         {
           type: 'alignment',
@@ -52,7 +72,13 @@ export default {
           url: this.alignmentURL,
           //name: 'HG02450'
         }
-      ]
+      ],
+      //showCursorTrackingGuide: true,
+      //showSequence: false,
+      //showNavigation: false,
+      //showRuler: false,
+      //flanking: 1000,
+      //locus: 'chr8:128748750-128749000',
     }
 
     igv.createBrowser(igvDiv, options).then((browser) => {
@@ -67,6 +93,11 @@ export default {
       this.browser.zoomIn();
     },
   },
+  watch: {
+    visible: function() {
+      igv.visibilityChange();
+    }
+  }
 }
 </script>
 
@@ -76,7 +107,7 @@ export default {
 }
 
 #igv-content {
-  max-height: 480px;
+  /*max-height: 480px;*/
   /*pointer-events: none;*/
 }
 
