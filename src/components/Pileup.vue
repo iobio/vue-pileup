@@ -1,21 +1,17 @@
 <template>
-  <div class='pileup'>
-    <v-app>
-      <v-container>
-        <v-card>
-        <div id='igv-content'></div>
-        <v-layout justify-center>
-          <v-btn fab small @click='zoomOut'>
-            <v-icon>zoom_out</v-icon>
-          </v-btn>
-          <v-btn fab small @click='zoomIn'>
-            <v-icon>zoom_in</v-icon>
-          </v-btn>
-        </v-layout>
-        </v-card>
-      </v-container>
-    </v-app>
-  </div>
+  <v-container>
+    <v-card>
+    <div id='igv-content'></div>
+    <v-layout justify-center>
+      <v-btn fab small @click='zoomOut'>
+        <v-icon>zoom_out</v-icon>
+      </v-btn>
+      <v-btn fab small @click='zoomIn'>
+        <v-icon>zoom_in</v-icon>
+      </v-btn>
+    </v-layout>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -111,18 +107,4 @@ export default {
 </script>
 
 <style scoped>
-.pileup {
-  max-width: 640px;
-}
-
-#igv-content {
-  /*max-height: 480px;*/
-  /*pointer-events: none;*/
-}
-
-#igv-zoom-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
 </style>

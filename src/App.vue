@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="vue-pileup-test-app">
     <pileup
         referenceURL="https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg19/hg19.fasta"
         alignmentURL="https://s3.amazonaws.com/iobio/samples/bam/NA12878.exome.bam"
@@ -12,7 +12,7 @@
 import Pileup from './components/Pileup.vue'
 
 export default {
-  name: 'app',
+  name: 'vue-pileup-test-app',
   components: {
     Pileup
   }
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-#app {
-  height: 200px;
+#vue-pileup-test-app {
+  width: 800px;
 }
 </style>
