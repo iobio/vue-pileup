@@ -53,39 +53,43 @@ export default {
     }
   },
   mounted: function () {
-    const igvDiv = this.$el.querySelector('#igv-content');
- 
-    var options = {
-      showControls: false,
-      showIdeogram: false,
-      showTrackLabels: false,
-      showCenterGuide: true,
-      minimumBases: 20,
-      reference: {
-       fastaURL: this.referenceURL,
-      },
-      locus: this.locus,
-      tracks: [
-        {
-          type: 'alignment',
-          format: 'bam',
-          url: this.alignmentURL,
-          //name: 'HG02450'
-        }
-      ],
-      //showCursorTrackingGuide: true,
-      //showSequence: false,
-      //showNavigation: false,
-      //showRuler: false,
-      //flanking: 1000,
-      //locus: 'chr8:128748750-128749000',
-    }
-
-    igv.createBrowser(igvDiv, options).then((browser) => {
-      this.browser = browser;
-    })
+    this.init();
   },
   methods: {
+    init: function() {
+      const igvDiv = this.$el.querySelector('#igv-content');
+   
+      var options = {
+        showControls: false,
+        showIdeogram: false,
+        showTrackLabels: false,
+        //showCenterGuide: true,
+        minimumBases: 20,
+        reference: {
+         fastaURL: this.referenceURL,
+        },
+        locus: this.locus,
+        tracks: [
+          {
+            type: 'alignment',
+            format: 'bam',
+            url: this.alignmentURL,
+            //name: 'HG02450'
+          }
+        ],
+        //showCursorTrackingGuide: true,
+        //showSequence: false,
+        //showNavigation: false,
+        //showRuler: false,
+        //flanking: 1000,
+        //locus: 'chr8:128748750-128749000',
+      }
+
+      igv.createBrowser(igvDiv, options).then((browser) => {
+        this.browser = browser;
+        console.log(browser);
+      })
+    },
     zoomOut: function() {
       this.browser.zoomOut();
     },
@@ -95,7 +99,12 @@ export default {
   },
   watch: {
     visible: function() {
-      igv.visibilityChange();
+      igv.removeBrowser(this.browser);
+      this.init();
+      //igv.visibilityChange();
+    },
+    locus: function() {
+      console.log("locus change: " + this.locus);
     }
   }
 }

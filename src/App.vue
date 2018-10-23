@@ -2,8 +2,8 @@
   <div id="app">
     <pileup
         referenceURL="https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg19/hg19.fasta"
-        alignmentURL="https://s3.amazonaws.com/1000genomes/phase3/data/HG00096/exome_alignment/HG00096.mapped.ILLUMINA.bwa.GBR.exome.20120522.bam"
-        locus="chr8:128748750-128749000"
+        alignmentURL="https://s3.amazonaws.com/iobio/samples/bam/NA12878.exome.bam"
+        locus="chr21:45712947-45713007"
     />
   </div>
 </template>
