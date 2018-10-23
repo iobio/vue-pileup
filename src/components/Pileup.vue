@@ -83,7 +83,6 @@ export default {
 
       igv.createBrowser(igvDiv, options).then((browser) => {
         this.browser = browser;
-        console.log(browser);
       })
     },
     zoomOut: function() {
@@ -99,9 +98,6 @@ export default {
       this.init();
       //igv.visibilityChange();
     },
-    locus: function() {
-      console.log("locus change: " + this.locus);
-    }
   }
 }
 </script>
