@@ -1,6 +1,6 @@
 {
   "name": "vue-pileup",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "igv": "^2.0.1",
     "vue": "^2.5.17",
     "vuetify": "^1.2.0"
   },
