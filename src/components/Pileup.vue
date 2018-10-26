@@ -18,19 +18,6 @@
 
 import igv from 'igv'
 
-const PileupButton = {
-  render(h) {
-    return h('button', {
-        on: {
-          click: () => {
-            this.$emit('click');
-          }
-        },
-      },
-      this.$slots.default
-    );
-  },
-};
 
 export default {
   name: 'pileup',
@@ -42,9 +29,6 @@ export default {
       type: Boolean,
       default: true,
     }
-  },
-  components: {
-    PileupButton,
   },
   data () {
     return {
