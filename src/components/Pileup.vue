@@ -38,7 +38,10 @@ export default {
     referenceURL: String,
     alignmentURL: String,
     locus: String,
-    visible: Boolean,
+    visible: {
+      type: Boolean,
+      default: true,
+    }
   },
   components: {
     PileupButton,
@@ -49,7 +52,9 @@ export default {
     }
   },
   mounted: function () {
-    this.init();
+    if (this.visible) {
+      this.init();
+    }
   },
   methods: {
     init: function() {
@@ -59,7 +64,7 @@ export default {
         showControls: false,
         showIdeogram: false,
         showTrackLabels: false,
-        //showCenterGuide: true,
+        showCenterGuide: true,
         minimumBases: 20,
         reference: {
          fastaURL: this.referenceURL,
@@ -94,8 +99,13 @@ export default {
   },
   watch: {
     visible: function() {
-      igv.removeBrowser(this.browser);
-      this.init();
+      if (!this.browser) {
+        this.init();
+      }
+      else if (!this.visible) {
+        igv.removeBrowser(this.browser);
+        this.browser = null;
+      }
       //igv.visibilityChange();
     },
   }
