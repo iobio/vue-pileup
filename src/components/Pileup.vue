@@ -24,6 +24,7 @@ export default {
   props: {
     referenceURL: String,
     alignmentURL: String,
+    variantURL: String,
     locus: String,
     visible: {
       type: Boolean,
@@ -55,12 +56,13 @@ export default {
         },
         locus: this.locus,
         tracks: [
+          
           {
             type: 'alignment',
             format: 'bam',
             url: this.alignmentURL,
             //name: 'HG02450'
-          }
+          },
         ],
         //showCursorTrackingGuide: true,
         //showSequence: false,
@@ -68,6 +70,19 @@ export default {
         //showRuler: false,
         //flanking: 1000,
         //locus: 'chr8:128748750-128749000',
+      }
+
+      if (this.variantURL) {
+        // insert variant track as first track
+        options.tracks.unshift({
+          type: "variant",
+          format: "vcf",
+          url: this.variantURL,
+          squishedCallHeight: 1,
+          expandedCallHeight: 4,
+          displayMode: "squished",
+          visibilityWindow: 1000
+        });
       }
 
       igv.createBrowser(igvDiv, options).then((browser) => {
