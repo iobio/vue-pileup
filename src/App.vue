@@ -3,6 +3,7 @@
     <pileup
         referenceURL="https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg19/hg19.fasta"
         alignmentURL="https://s3.amazonaws.com/iobio/samples/bam/NA12878.exome.bam"
+        variantURL="https://s3.amazonaws.com/iobio/samples/vcf/platinum-exome.vcf.gz"
         locus="chr21:45712947-45713007"
     />
   </div>
