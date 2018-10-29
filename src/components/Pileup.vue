@@ -111,5 +111,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.igv-content-header {
+  display: none;
+}
 </style>
