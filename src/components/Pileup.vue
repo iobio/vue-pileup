@@ -112,7 +112,14 @@ export default {
 </script>
 
 <style>
+
+.igv-right-hand-gutter {
+  right: initial;
+  left: -10px;
+}
+
 .igv-content-header {
   display: none;
 }
+
 </style>
