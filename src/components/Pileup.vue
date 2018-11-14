@@ -23,13 +23,16 @@ export default {
   name: 'pileup',
   props: {
     referenceURL: String,
-    alignmentURL: String,
-    variantURL: String,
     locus: String,
     visible: {
       type: Boolean,
       default: true,
-    }
+    },
+    tracks: Array,
+    showLabels: {
+      type: Boolean,
+      default: true,
+    },
   },
   data () {
     return {
@@ -45,25 +48,17 @@ export default {
     init: function() {
       const igvDiv = this.$el.querySelector('#igv-content');
    
-      var options = {
+      const options = {
         showControls: false,
         showIdeogram: false,
-        showTrackLabels: false,
+        showTrackLabels: this.showLabels,
         showCenterGuide: true,
         minimumBases: 20,
         reference: {
          fastaURL: this.referenceURL,
         },
         locus: this.locus,
-        tracks: [
-          
-          {
-            type: 'alignment',
-            format: 'bam',
-            url: this.alignmentURL,
-            //name: 'HG02450'
-          },
-        ],
+        tracks: [],
         //showCursorTrackingGuide: true,
         //showSequence: false,
         //showNavigation: false,
@@ -72,16 +67,27 @@ export default {
         //locus: 'chr8:128748750-128749000',
       }
 
-      if (this.variantURL) {
-        // insert variant track as first track
-        options.tracks.unshift({
-          type: "variant",
-          format: "vcf",
-          url: this.variantURL,
-          squishedCallHeight: 1,
-          expandedCallHeight: 4,
-          displayMode: "squished",
-          visibilityWindow: 1000
+      for (const track of this.tracks) {
+
+        if (track.variantURL) {
+          // insert variant track as first track
+          options.tracks.push({
+            name: track.name + " Variants", 
+            type: "variant",
+            format: "vcf",
+            url: track.variantURL,
+            squishedCallHeight: 1,
+            expandedCallHeight: 4,
+            displayMode: "squished",
+            visibilityWindow: 1000
+          });
+        }
+        
+        options.tracks.push({
+          name: track.name + " Alignment", 
+          type: 'alignment',
+          format: 'bam',
+          url: track.alignmentURL,
         });
       }
 
