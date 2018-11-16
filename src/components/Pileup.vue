@@ -31,7 +31,7 @@ export default {
     tracks: Array,
     showLabels: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data () {
