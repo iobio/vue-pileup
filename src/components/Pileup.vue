@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-    <div id='igv-content'></div>
+    <v-btn @click='launchFullIGV'>Open in IGV</v-btn>
     <v-layout justify-center>
       <v-btn fab small @click='zoomOut'>
         <v-icon>zoom_out</v-icon>
@@ -10,6 +10,7 @@
         <v-icon>zoom_in</v-icon>
       </v-btn>
     </v-layout>
+    <div id='igv-content'></div>
     </v-card>
   </v-container>
 </template>
@@ -50,7 +51,7 @@ export default {
    
       const options = {
         showControls: false,
-        showIdeogram: false,
+        showIdeogram: true,
         showTrackLabels: this.showLabels,
         showCenterGuide: true,
         minimumBases: 20,
@@ -69,21 +70,24 @@ export default {
 
       for (const track of this.tracks) {
 
-        if (track.variantURL) {
-          // insert variant track as first track
-          options.tracks.push({
-            name: track.name + " Variants", 
-            type: "variant",
-            format: "vcf",
-            url: track.variantURL,
-            squishedCallHeight: 1,
-            expandedCallHeight: 4,
-            displayMode: "squished",
-            visibilityWindow: 1000
-          });
-        }
+        //if (track.variantURL) {
+        //  // insert variant track as first track
+        //  options.tracks.push({
+        //    name: track.name + " Variants", 
+        //    type: "variant",
+        //    format: "vcf",
+        //    url: track.variantURL,
+        //    //squishedCallHeight: 1,
+        //    //expandedCallHeight: 4,
+        //    //displayMode: "squished",
+        //    visibilityWindow: 1000
+        //  });
+        //}
         
         options.tracks.push({
+          height: 150,
+          coverageTrackHeight: 30,
+          alignmentRowHeight: 1,
           name: track.name + " Alignment", 
           type: 'alignment',
           format: 'bam',
@@ -101,6 +105,9 @@ export default {
     zoomIn: function() {
       this.browser.zoomIn();
     },
+    launchFullIGV: function() {
+      launchIGV(this.referenceURL, this.locus, this.tracks);
+    },
   },
   watch: {
     visible: function() {
@@ -115,6 +122,37 @@ export default {
     },
   }
 }
+
+function launchIGV(referenceURL, locus, tracks) {
+
+  const igvTracks = tracks.map((track) => ({
+    type: 'alignment',
+    format: 'bam',
+    url: track.alignmentURL,
+    name: track.name,
+  }))
+
+  const igvConfig = {
+    reference: {
+      fastaURL: referenceURL,
+    },
+    locus,
+    tracks: igvTracks,
+  }
+
+  if (tracks[0].variantURL) {
+    igvConfig.tracks.unshift({
+      name: 'Variants',
+      type: 'variant',
+      format: 'vcf',
+      url: tracks[0].variantURL,
+    })
+  }
+
+  const url = 'http://localhost:8083/?config=' + JSON.stringify(igvConfig)
+  window.open(url, '_blank')
+}
+
 </script>
 
 <style>
@@ -125,7 +163,7 @@ export default {
 }
 
 .igv-content-header {
-  display: none;
+  //display: none;
 }
 
 </style>
