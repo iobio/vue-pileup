@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-    <v-btn @click='launchFullIGV'>Open in IGV</v-btn>
+    <v-btn @click='launchFullIGV'>Open IGV in a Tab</v-btn>
     <v-layout justify-center>
       <v-btn fab small @click='zoomOut'>
         <v-icon>zoom_out</v-icon>
@@ -53,7 +53,7 @@ export default {
         showControls: false,
         showIdeogram: true,
         showTrackLabels: this.showLabels,
-        showCenterGuide: true,
+        //showCenterGuide: true,
         minimumBases: 20,
         reference: {
          fastaURL: this.referenceURL,
@@ -85,10 +85,10 @@ export default {
         //}
         
         options.tracks.push({
-          height: 150,
+          height: 120,
           coverageTrackHeight: 30,
           alignmentRowHeight: 1,
-          name: track.name + " Alignment", 
+          name: track.name, 
           type: 'alignment',
           format: 'bam',
           url: track.alignmentURL,
