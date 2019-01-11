@@ -88,6 +88,7 @@ export default {
           type: 'alignment',
           format: 'bam',
           url: track.alignmentURL,
+          indexURL: track.alignmentIndexURL,
         });
       }
 
