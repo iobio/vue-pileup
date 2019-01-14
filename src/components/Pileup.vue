@@ -1,16 +1,27 @@
 <template>
   <v-container>
     <v-card>
-    <v-btn @click='launchFullIGV'>Open IGV in a Tab</v-btn>
-    <v-layout justify-center>
-      <v-btn fab small @click='zoomOut'>
-        <v-icon>zoom_out</v-icon>
-      </v-btn>
-      <v-btn fab small @click='zoomIn'>
-        <v-icon>zoom_in</v-icon>
-      </v-btn>
-    </v-layout>
-    <div id='igv-content'></div>
+      <v-layout column>
+        <v-layout row justify-space-between>
+          <v-flex xs3>
+            {{heading}}
+          </v-flex>
+          <v-layout xs3 justify-center>
+            <v-btn fab small @click='zoomOut'>
+              <v-icon>zoom_out</v-icon>
+            </v-btn>
+            <v-btn fab small @click='zoomIn'>
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
+          </v-layout>
+          <v-flex xs3>
+            <v-btn @click='launchFullIGV'>Open IGV in a Tab</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-flex xs12>
+          <div id='igv-content'></div>
+        </v-flex>
+      </v-layout>
     </v-card>
   </v-container>
 </template>
@@ -23,6 +34,7 @@ import igv from 'igv'
 export default {
   name: 'pileup',
   props: {
+    heading: String,
     referenceURL: String,
     locus: String,
     visible: {
