@@ -162,7 +162,7 @@ function launchIGV(referenceURL, locus, tracks) {
     })
   }
 
-  const url = 'http://localhost:8083/?config=' + JSON.stringify(igvConfig)
+  const url = 'https://s3.amazonaws.com/static.iobio.io/dev/igv.iobio.io/index.html?config=' + JSON.stringify(igvConfig)
   window.open(url, '_blank')
 }
 
