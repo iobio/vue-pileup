@@ -1,15 +1,27 @@
 <template>
   <v-container>
     <v-card>
-    <div id='igv-content'></div>
-    <v-layout justify-center>
-      <v-btn fab small @click='zoomOut'>
-        <v-icon>zoom_out</v-icon>
-      </v-btn>
-      <v-btn fab small @click='zoomIn'>
-        <v-icon>zoom_in</v-icon>
-      </v-btn>
-    </v-layout>
+      <v-layout column>
+        <v-layout row justify-space-between>
+          <v-flex xs3>
+            {{heading}}
+          </v-flex>
+          <v-layout xs3 justify-center>
+            <v-btn fab small @click='zoomOut'>
+              <v-icon>zoom_out</v-icon>
+            </v-btn>
+            <v-btn fab small @click='zoomIn'>
+              <v-icon>zoom_in</v-icon>
+            </v-btn>
+          </v-layout>
+          <v-flex xs3>
+            <v-btn @click='launchFullIGV'>Open IGV in a Tab</v-btn>
+          </v-flex>
+        </v-layout>
+        <v-flex xs12>
+          <div id='igv-content'></div>
+        </v-flex>
+      </v-layout>
     </v-card>
   </v-container>
 </template>
@@ -22,6 +34,7 @@ import igv from 'igv'
 export default {
   name: 'pileup',
   props: {
+    heading: String,
     referenceURL: String,
     locus: String,
     visible: {
@@ -50,9 +63,9 @@ export default {
    
       const options = {
         showControls: false,
-        showIdeogram: false,
+        showIdeogram: true,
         showTrackLabels: this.showLabels,
-        showCenterGuide: true,
+        //showCenterGuide: true,
         minimumBases: 20,
         reference: {
          fastaURL: this.referenceURL,
@@ -69,22 +82,25 @@ export default {
 
       for (const track of this.tracks) {
 
-        if (track.variantURL) {
-          // insert variant track as first track
-          options.tracks.push({
-            name: track.name + " Variants", 
-            type: "variant",
-            format: "vcf",
-            url: track.variantURL,
-            squishedCallHeight: 1,
-            expandedCallHeight: 4,
-            displayMode: "squished",
-            visibilityWindow: 1000
-          });
-        }
+        //if (track.variantURL) {
+        //  // insert variant track as first track
+        //  options.tracks.push({
+        //    name: track.name + " Variants", 
+        //    type: "variant",
+        //    format: "vcf",
+        //    url: track.variantURL,
+        //    //squishedCallHeight: 1,
+        //    //expandedCallHeight: 4,
+        //    //displayMode: "squished",
+        //    visibilityWindow: 1000
+        //  });
+        //}
         
         options.tracks.push({
-          name: track.name + " Alignment", 
+          height: 120,
+          coverageTrackHeight: 30,
+          alignmentRowHeight: 1,
+          name: track.name, 
           type: 'alignment',
           format: 'bam',
           url: track.alignmentURL,
@@ -102,6 +118,9 @@ export default {
     zoomIn: function() {
       this.browser.zoomIn();
     },
+    launchFullIGV: function() {
+      launchIGV(this.referenceURL, this.locus, this.tracks);
+    },
   },
   watch: {
     visible: function() {
@@ -116,6 +135,37 @@ export default {
     },
   }
 }
+
+function launchIGV(referenceURL, locus, tracks) {
+
+  const igvTracks = tracks.map((track) => ({
+    type: 'alignment',
+    format: 'bam',
+    url: track.alignmentURL,
+    name: track.name,
+  }))
+
+  const igvConfig = {
+    reference: {
+      fastaURL: referenceURL,
+    },
+    locus,
+    tracks: igvTracks,
+  }
+
+  if (tracks[0].variantURL) {
+    igvConfig.tracks.unshift({
+      name: 'Variants',
+      type: 'variant',
+      format: 'vcf',
+      url: tracks[0].variantURL,
+    })
+  }
+
+  const url = 'https://s3.amazonaws.com/static.iobio.io/dev/igv.iobio.io/index.html?config=' + JSON.stringify(igvConfig)
+  window.open(url, '_blank')
+}
+
 </script>
 
 <style>
@@ -126,7 +176,7 @@ export default {
 }
 
 .igv-content-header {
-  display: none;
+  //display: none;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div id="vue-pileup-test-app">
     <pileup
+      heading="Read pileup RAI1 SNP 17:17698254 G->A"
       referenceURL="https://s3.amazonaws.com/igv.broadinstitute.org/genomes/seq/hg19/hg19.fasta"
       locus="chr21:45712947-45713007"
       :tracks='tracks'
