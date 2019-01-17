@@ -139,12 +139,14 @@ function launchIGV(referenceURL, locus, tracks) {
 
   const igvTracks = tracks.map((track) => ({
     type: 'alignment',
-    format: 'bam',
+    //format: 'bam',
     url: track.alignmentURL,
+    indexURL: track.alignmentIndexURL,
     name: track.name,
   }))
 
   const igvConfig = {
+    showIdeogram: true,
     reference: {
       fastaURL: referenceURL,
     },
