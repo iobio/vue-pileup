@@ -28,7 +28,7 @@
 
 <script>
 
-import igv from 'igv'
+import igv from '../../lib/igv.esm'
 
 
 export default {
@@ -102,7 +102,6 @@ export default {
           alignmentRowHeight: 1,
           name: track.name, 
           type: 'alignment',
-          format: 'bam',
           url: track.alignmentURL,
           indexURL: track.alignmentIndexURL,
         });
